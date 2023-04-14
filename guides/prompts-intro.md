@@ -64,14 +64,14 @@ Here is a basic example of a simple prompt:
 
 *Prompt*
 ```
-The sky is
+The sky is （訳：空は）
 ```
 
 *Output:*
 ```
-blue
+blue（訳：青い）
 
-The sky is blue on a clear day. On a cloudy day, the sky may be gray or white.
+The sky is blue on a clear day. On a cloudy day, the sky may be gray or white.（訳：晴れた日の空は青いでs。曇りの日は、空が灰色や白になることがあります。）
 ```
 
 As you can see, the language model outputs a continuation of strings that make sense given the context `"The sky is"`. The output might be unexpected or far from the task we want to accomplish. 
@@ -82,18 +82,21 @@ As you can see, the language model outputs a continuation of strings that make s
 
 *プロンプト*
 ```
-Complete the sentence: 
+Complete the sentence: （訳：この文を完成させてください。）
 
-The sky is
+The sky is（空は）
 ```
 
 *出力：*
 
 ```
- so  beautiful today.
+ so  beautiful today.（訳：今日はとても美しいです。）
 ```
 
-これで良いのでしょうか？このように、モデルに文章を完成させるように指示したので、結果は私たちが指示したこと（「文章を完成させる」）に忠実に従うことになり、より良く見えます。このように、モデルにタスクを指示するための最適なプロンプトを設計するアプローチを、プロンプトエンジニアリングと呼びます。
+これで良くなったでしょうか？このように、モデルに文章を完成させるように指示したので、結果は私たちが指示したこと（「文章を完成させる」）に忠実に従うことになり、より良く見えます。このように、モデルにタスクを指示するための最適なプロンプトを設計するアプローチを、**プロンプトエンジニアリング**と呼びます。
+
+上の例は、現在のLLMで可能なことの基本的な説明である。現在のLLMは、テキストの要約から数学的推論、コード生成まで、あらゆる種類の高度なタスクを実行することができます。
+
 
 This basic example also highlights the necessity to provide more context or instructions on what specifically we want to achieve.
 
@@ -101,7 +104,7 @@ Let's try to improve it a bit:
 
 *Prompt:*
 ```
-Complete the sentence: 
+Complete the sentence:
 
 The sky is
 ```
@@ -116,13 +119,10 @@ Is that better? Well, we told the model to complete the sentence so the result l
 
 The example above is a basic illustration of what's possible with LLMs today. Today's LLMs can perform all kinds of advanced tasks that range from text summarization to mathematical reasoning to code generation.
 
+---
 
+## LLMの設定について
 
-
-
-上の例は、現在のLLMで可能なことの基本的な説明である。現在のLLMは、テキストの要約から数学的推論、コード生成まで、あらゆる種類の高度なタスクを実行することができます。
-
-LLMの設定について
 プロンプトを扱う場合、APIを介して、または直接LLMと対話することになります。いくつかのパラメータを設定することで、プロンプトの結果を変化させることができます。
 
 温度 - つまり、温度が低ければ低いほど、次のトークンの確率が最も高いものが常に選ばれるという意味で、結果がより決定的になります。温度を上げると、ランダム性が高まり、より多様で創造的なアウトプットが可能になります。つまり、他の可能性のあるトークンの重みを増やすのです。応用例としては、事実に基づくQAなどでは、温度を低くして、より事実に基づいた簡潔な回答を促すとよいでしょう。詩の生成やその他の創造的な作業には、温度を高くするのが効果的かもしれません。
@@ -132,6 +132,23 @@ Top_p - 同様に、核サンプリングと呼ばれる温度によるサンプ
 一般的には、両方を変更するのではなく、どちらかを変更することをお勧めします。
 
 基本的な例から始める前に、使用するLLMのバージョンによって結果が異なる可能性があることを念頭に置いておいてください。
+
+
+
+---
+## A Word on LLM Settings
+
+When working with prompts, you will be interacting with the LLM via an API or directly. You can configure a few parameters to get different results for your prompts. 
+
+**Temperature** - In short, the lower the temperature the more deterministic the results in the sense that the highest probable next token is always picked. Increasing the temperature could lead to more randomness encouraging more diverse or creative outputs. We are essentially increasing the weights of the other possible tokens. In terms of application, we might want to use a lower temperature for something like fact-based QA to encourage more factual and concise responses. For poem generation or other creative tasks, it might be beneficial to increase the temperature. 
+
+**Top_p** - Similarly, with top_p, a sampling technique with temperature called nucleus sampling, you can control how deterministic the model is at generating a response. If you are looking for exact and factual answers keep this low. If you are looking for more diverse responses, increase to a higher value. 
+
+The general recommendation is to alter one, not both.
+
+Before starting with some basic examples, keep in mind that your results may vary depending on the version of LLM you are using. 
+
+---
 
 標準的なプロンプト
 以上、非常にシンプルなプロンプトを試してみました。標準的なプロンプトは、次のような形式です：
@@ -279,65 +296,6 @@ Hola！
 申し訳ありませんが、あなたの興味に関する情報はありません。しかし、今、世界のトップトレンドの映画のリストがあります： [映画のリスト]です。何かお好きなものが見つかるといいですね！
 上記の例の一部は、「OpenAI APIを使ったプロンプトエンジニアリングのベストプラクティス」記事から採用しました。
 
-
-
-
-
-## Basic Prompts
-
-You can already achieve a lot with prompts, but the quality of results depends on how much information you provide it. A prompt can contain information like the `instruction` or `question` you are passing to the model and include other details such as `inputs` or `examples`. 
-
-Here is a basic example of a simple prompt:
-
-*Prompt*
-```
-The sky is
-```
-
-*Output:*
-```
-blue
-
-The sky is blue on a clear day. On a cloudy day, the sky may be gray or white.
-```
-
-As you can see, the language model outputs a continuation of strings that make sense given the context `"The sky is"`. The output might be unexpected or far from the task we want to accomplish. 
-
-This basic example also highlights the necessity to provide more context or instructions on what specifically we want to achieve.
-
-Let's try to improve it a bit:
-
-*Prompt:*
-```
-Complete the sentence: 
-
-The sky is
-```
-
-*Output:*
-
-```
- so  beautiful today.
-```
-
-Is that better? Well, we told the model to complete the sentence so the result looks a lot better as it follows exactly what we told it to do ("complete the sentence"). This approach of designing optimal prompts to instruct the model to perform a task is what's referred to as **prompt engineering**. 
-
-The example above is a basic illustration of what's possible with LLMs today. Today's LLMs can perform all kinds of advanced tasks that range from text summarization to mathematical reasoning to code generation.
-
----
-## A Word on LLM Settings
-
-When working with prompts, you will be interacting with the LLM via an API or directly. You can configure a few parameters to get different results for your prompts. 
-
-**Temperature** - In short, the lower the temperature the more deterministic the results in the sense that the highest probable next token is always picked. Increasing the temperature could lead to more randomness encouraging more diverse or creative outputs. We are essentially increasing the weights of the other possible tokens. In terms of application, we might want to use a lower temperature for something like fact-based QA to encourage more factual and concise responses. For poem generation or other creative tasks, it might be beneficial to increase the temperature. 
-
-**Top_p** - Similarly, with top_p, a sampling technique with temperature called nucleus sampling, you can control how deterministic the model is at generating a response. If you are looking for exact and factual answers keep this low. If you are looking for more diverse responses, increase to a higher value. 
-
-The general recommendation is to alter one, not both.
-
-Before starting with some basic examples, keep in mind that your results may vary depending on the version of LLM you are using. 
-
----
 ## Standard Prompts
 
 We have tried a very simple prompt above. A standard prompt has the following format:
